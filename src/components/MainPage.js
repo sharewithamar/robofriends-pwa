@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 
-import CardList from '../components/CardList';
-import SearchBox from '../components/SearchBox';
-import Scroll from '../components/Scroll';
-import ErrorBoundry from '../components/ErrorBoundry';
-import Header from '../components/Header';
+import CardList from './CardList';
+import SearchBox from './SearchBox';
+import Scroll from './Scroll';
+import ErrorBoundry from './ErrorBoundry';
+import Header from './Header';
 
-import './MainPage.css';
-
-class MainPage extends Component {
+export class MainPage extends Component {
   componentDidMount() {
     this.props.onRequestRobots();
   }
+
   filterRobots = () => {
-    return this.props.robots.filter(robot => {
-      return robot.name
-        .toLowerCase()
-        .includes(this.props.searchField.toLowerCase());
+    const { robots, searchField } = this.props;
+    return robots.filter(robot => {
+      return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
   };
 
@@ -32,7 +30,7 @@ class MainPage extends Component {
             <h1>Loading</h1>
           ) : (
             <ErrorBoundry>
-              <CardList robots={this.filterRobots} />
+              <CardList robots={this.filterRobots()} />
             </ErrorBoundry>
           )}
         </Scroll>
